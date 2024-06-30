@@ -5,15 +5,11 @@
 
 {% block content %}
 
-
-    
-
     <div class="container mt-5">
 
         <h2 style="margin-top: 120px;">All Animes</h2>
         <hr style="color: rgba(255, 255, 255, 0.568);">
 
-        <!-- <div class="row row-cols-1 row-cols-md-4 g-4 mt-4"> -->
         <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
         {% if anime_list %}
             {% for anime in anime_list %}
@@ -24,13 +20,18 @@
                         </a>
                         <div class="card-body">
                             <h6 class="card-title">{{ anime.title }}</h6>
-                            <p class="card-text">{{ anime.description |slice:":100" }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="card-text">Episodes: {{ anime.episodes}}</small>
+                            {% for language in anime.subtitle_or_dub.all %}
+                                <small class="card-text" style="color: #f47521">{{ language.name }} |</small>
+                            {% endfor %}
+                            
+                            <p class="card-text">{{ anime.description |slice:":60" }}</p>
+
+                            <small class="card-text">Seasons: {{ anime.total_seasons }}</small>
                             <br>
-                            <small class="card-text">☆ {{ anime.rating}}</small>
-                        </div>  
+                            <small class="card-text">Episodes: {{ anime.total_episodes }}</small>
+                            <br>
+                            <small class="card-text">☆ {{ anime.rating }}</small>
+                        </div>            
                     </div>
                 </div>
             {% endfor %}
