@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+
+    
+
+    <div class="container mt-5">
+
+        <h2 style="margin-top: 120px;">All Animes</h2>
+        <hr style="color: rgba(255, 255, 255, 0.568);">
+
+        <!-- <div class="row row-cols-1 row-cols-md-4 g-4 mt-4"> -->
+        <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+        {% if anime_list %}
+            {% for anime in anime_list %}
+                <div class="col">
+                    <div class="card h-100" style="background-color: transparent;">
+                        <a href="#">
+                            <img src="{{ anime.cover_image }}" class="card-img-top img-hover" alt="{{ anime.title }}">
+                        </a>
+                        <div class="card-body">
+                            <h6 class="card-title">{{ anime.title }}</h6>
+                            <p class="card-text">{{ anime.description |slice:":100" }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="card-text">Episodes: {{ anime.episodes}}</small>
+                            <br>
+                            <small class="card-text">☆ {{ anime.rating}}</small>
+                        </div>  
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No anime data available.</p>
+        {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}
