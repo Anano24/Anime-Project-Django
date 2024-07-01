@@ -21,9 +21,9 @@ body {
     
 }
 
-.search-icon {
+/* .search-icon {
     width: 24px;
-}
+} */
 .navbar-brand {
     color: #f47521;
     font-weight: 900;
@@ -94,6 +94,7 @@ h2 {
     transform: scale(1.05);
     cursor: pointer;
 }
+
 
 
 @media (max-width: 1000px) {

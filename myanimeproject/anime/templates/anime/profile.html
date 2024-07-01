@@ -2,43 +2,13 @@
 
 {% block title %} Profile {% endblock %}
 
+
 {% block content %}
     <div class="container mt-5">
-        <h1 style="margin: 120px 0 30px; color: white;">I am {{user}}</h1>
+        <h1 style="margin-top: 120px; color: white;">I am {{user}}</h1>
+    </div>
 
-        <h3 style="color: white;">My Animes</h3>
-        <hr style="color: rgba(255, 255, 255, 0.568);">
+    {% include 'anime/animes.html' %}
 
-
-        <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
-            {% if anime_list %}
-                {% for anime in anime_list %}
-                    <div class="col">
-                        <div class="card h-100" style="background-color: transparent;">
-                            <a href="#">
-                                <img src="{{ anime.cover_image }}" class="card-img-top img-hover" alt="{{ anime.title }}">
-                            </a>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ anime.title }}</h6>
-                                {% for language in anime.subtitle_or_dub.all %}
-                                    <small class="card-text" style="color: #f47521">{{ language.name }} |</small>
-                                {% endfor %}
-                                
-                                <p class="card-text">{{ anime.description |slice:":60" }}</p>
-    
-                                <small class="card-text">Seasons: {{ anime.total_seasons }}</small>
-                                <br>
-                                <small class="card-text">Episodes: {{ anime.total_episodes }}</small>
-                                <br>
-                                <small class="card-text">☆ {{ anime.rating }}</small>
-                            </div>            
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>No anime data available.</p>
-            {% endif %}
-            </div>
-        </div>
         
 {% endblock %}
