@@ -1,0 +1,74 @@
+/* font: 'Lato', sans-serif */
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Josefin+Sans:wght@400;700&family=Kumbh+Sans:wght@400;700&family=Lato:wght@300;400;700;900&family=Outfit:wght@300;400;600&family=Plus+Jakarta+Sans:wght@500;700;800&family=Red+Hat+Display:wght@700&display=swap');
+
+
+.register-img {
+    margin-top: 50%;
+    margin-left: 170%;   
+}
+.login-register-form {
+    
+    width: 40%;
+}
+
+.h1-container {
+    margin-top: 22%;
+    color: white;
+}
+
+.form-container {
+    background-color: rgba(0, 0, 0, 0.932);
+    padding: 10%;
+    margin-top: 4%;
+}
+
+.login-btn{
+    width: 50%;
+    margin-top: 7%;
+    background-color: #f47521;
+    border: none;
+    border-radius: 0;
+    color: black;
+    font-weight: 700;
+}
+
+.form-control1 {
+    border-color: #f47521;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    border-radius: 0px;
+}
+
+
+.no-account {
+    color: rgba(255, 255, 255, 0.705);
+    margin-top: 20px;
+    font-weight: 400;
+}
+
+
+.sign-link {
+    text-decoration: none;
+    color:#f47521;
+    margin: 20px 0 0 10px;
+    font-weight: 400;
+}
+
+
+
+@media (max-width: 1050px) {
+    .register-img {
+        margin-top: 50%;
+        margin-left: 100%;   
+    }
+
+}
+@media (max-width: 900px) {
+    .register-img {
+        width: 70%;
+        margin-top: 50%;
+        margin-left: 50%;   
+    }
+
+}

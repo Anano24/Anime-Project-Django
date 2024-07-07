@@ -12,6 +12,25 @@
                     <a href="#">
                         <img src="{{ anime.cover_image }}" class="card-img-top img-hover" alt="{{ anime.title }}">
                     </a>
+
+                    <div class="overlay">
+                        <div class="card-btn-box">
+                            <a href="#">
+                                <img class="video-btn"  src="/media/icons/play.svg">
+                            </a>
+                            {% if anime in request.user.animes.all %}
+                                <a href="{% url 'delete_from_watchlist' anime.id %}"> 
+                                    <img class="watchlist-delete-btn" src="/media/icons/x-lg.svg">
+                                </a>
+                            {% else %}
+                                <a href="{% url 'add_to_watchlist' anime.id %}"> 
+                                    <img class="bookmark-btn" src="/media/icons/plus-lg.svg">
+                                </a>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+
                     <div class="card-body">
                         <h6 class="card-title">{{ anime.title }}</h6>
                         {% for language in anime.subtitle_or_dub.all %}
@@ -34,4 +53,5 @@
     {% endif %}
     </div>
 </div>
+
 
