@@ -1,0 +1,76 @@
+{% extends 'base.html'%}
+{% load widget_tweaks %}
+
+{% block title %} login_register page {% endblock %}
+
+
+{% block content %}
+
+        <div class="container mt-5">
+            <div  class="card" style="background-color: rgba(0, 0, 0, 0.932); border-radius: 0; padding: 15px; margin: 9.375rem 0 6.25rem; color: #ffffff;">
+            
+                    {% if user.is_authenticated%}
+                    <h1 style="margin-bottom: 30px;">Add Anime</h1>
+                    <form method="post" id="itemForm" enctype="multipart/form-data" >
+                        {% csrf_token %}
+                        <div>
+                            <label>Anime Cover</label>
+                            {{ form.cover_image|add_class:"form-control form-control1" }}
+                        </div>
+                        <div class="mt-3">
+                            <label>Title:</label>
+                            {{ form.title|add_class:"form-control form-control1"|attr:"placeholder:Title" }}
+                        </div>
+                        <div class="mt-3">
+                            <label>Description:</label>
+                            {{ form.description|add_class:"form-control form-control1"|attr:"placeholder:Description" }}
+                        </div>
+                        <div class="mt-3">
+                            <label for="anime_genre">Genre:</label>
+                            <input required type="text" name="genre" list="genre-list" class="form-control form-control1" >
+                            <datalist id="genre-list">
+                                {% for genre in genres %}
+                                    <select id="anime_genre">
+                                        <option value="{{ genre.name }}" >{{ genre.name }}</option>
+                                    </select>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="mt-3">
+                            <label>Release date:</label>
+                            <input required type="date" name="release_date" class="form-control form-control1">
+                        </div>
+                        <div class="mt-3">
+                            <label>Status:</label>
+                            {{ form.status|add_class:"form-control form-control1"|attr:"placeholder:Status" }}
+                        </div>
+                        <div class="mt-3">
+                            <label>Rating:</label>
+                            <input required type="number" step="0.01" name="rating" class="form-control form-control1">
+                        </div>
+                        <div class="mt-3">
+                            <label for="anime_genre">Language option:</label>
+                            <input required type="text" name="subtitle-or-dub" list="subtitle-or-dub-list" class="form-control form-control1" >
+                            <datalist id="subtitle-or-dub-list">
+                                {% for option in subtitle_or_dub %}
+                                    <select id="subtitle-or-dub">
+                                        <option value="{{ option.name }}" >{{ option.name }}</option>
+                                    </select>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger py-2 login-btn" id="liveToastBtn" style="border-radius: 0; width: 30%;" >Add</button>
+                    </form>
+                    
+                {% else %}
+                    <h2>You don't have a permission to add event</h2>
+
+                {% endif %}
+
+            </div>
+        </div>
+    
+    
+        
+{% endblock %}

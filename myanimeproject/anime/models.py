@@ -28,7 +28,7 @@ class Anime(models.Model):
     release_date = models.DateField()
     status = models.CharField(max_length=50)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
-    cover_image = models.CharField(max_length=300)
+    cover_image = models.ImageField(null=True, blank=True)
     subtitle_or_dub = models.ManyToManyField(LanguageOption, related_name='animes')
 
 

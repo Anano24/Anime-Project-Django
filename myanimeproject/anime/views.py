@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Anime, User, Genre
+from .models import Anime, User, Genre, LanguageOption
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import MyUserCreationForm
+from .forms import MyUserCreationForm, AnimeAddForm
 
 
 
@@ -112,3 +112,33 @@ def register_page(request):
 
     context = {'form': form}
     return render(request, 'anime/login_register.html', context)
+
+
+
+def add_anime(request):
+    form = AnimeAddForm()
+    genres = Genre.objects.all()
+    subtitle_or_dub = LanguageOption.objects.all()
+
+    if request.method == 'POST':
+        anime_genre = request.POST.get('genre')
+        anime_languageoption = request.POST.get('subtitle-or-dub')
+
+        genre, created = Genre.objects.get_or_create(name=anime_genre)
+        languageoption, created = LanguageOption.objects.get_or_create(name=anime_languageoption)
+
+        form = AnimeAddForm(request.POST)
+
+        new_anime = Anime(cover_image=request.FILES['cover_image'], title=form.data['title'], 
+                          description=form.data['description'], 
+                          release_date=form.data['release_date'], status=form.data['status'], 
+                          rating=form.data['rating'])
+        
+        new_anime.save()
+        new_anime.genres.add(genre)
+        new_anime.subtitle_or_dub.add(languageoption)
+
+        return redirect('home')
+    
+    context = {'form': form, 'genres': genres, 'subtitle_or_dub': subtitle_or_dub}
+    return render(request, 'anime/add_anime.html', context)

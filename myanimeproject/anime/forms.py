@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
-
+from .models import User, Anime
+from django.forms import ModelForm
+from django import forms
 
 
 
@@ -10,4 +11,9 @@ class MyUserCreationForm(UserCreationForm):
         fields = ['username', 'password1', 'password2']
 
         
-    
+        
+class AnimeAddForm(ModelForm):
+    class Meta:
+        model = Anime
+        fields = '__all__'
+

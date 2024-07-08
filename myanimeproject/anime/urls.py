@@ -12,7 +12,8 @@ urlpatterns = [
     path('delete_from_watchlist/<str:id>/', views.delete_from_watchlist, name='delete_from_watchlist'),
     path('login/', views.login_page, name='login'),
     path('logout/', views.logout_page, name='logout'),
-    path('register/', views.register_page, name='register')
+    path('register/', views.register_page, name='register'),
+    path('add/', views.add_anime, name='add')
 ]
 
 
