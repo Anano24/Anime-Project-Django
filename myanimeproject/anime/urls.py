@@ -13,7 +13,11 @@ urlpatterns = [
     path('login/', views.login_page, name='login'),
     path('logout/', views.logout_page, name='logout'),
     path('register/', views.register_page, name='register'),
-    path('add/', views.add_anime, name='add')
+    path('add/', views.add_anime, name='add'),
+    path('detailed_anime/<str:id>/', views.detailed_anime, name='detailed_anime'),
+    path('detailed_anime/<str:anime_id>/season/<str:season_id>/episode/<str:episode_id>/', views.episode_detail, name='episode_detail'),
+    path('get_episodes/<int:anime_id>/season/<int:season_id>/', views.get_episodes, name='get_episodes'),
+
 ]
 
 

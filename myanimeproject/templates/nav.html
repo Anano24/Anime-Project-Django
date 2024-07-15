@@ -10,23 +10,25 @@
           <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
 
-        {% if request.user.is_authenticated %}
-          <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{% url 'profile' request.user.id %}">Profile</a>
-          </li>
+        
+        {% if request.user.is_authenticated and request.user.is_superuser%}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                User Menu
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'profile' request.user.id %}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'add' %}">Add new anime</a></li>
+              </ul>
+            </li>
+            {% elif request.user.is_authenticated %}
+              <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{% url 'profile' request.user.id %}">Profile</a>
+              </li>
+
         {% endif %}
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-              Browse
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Popular</a></li>
-            <li><a class="dropdown-item" href="#">New</a></li>
-            <li><a class="dropdown-item" href="#">Alphabetical</a></li>
-            <li><a class="dropdown-item" href="{{ request.path }}">All</a></li>
-          </ul>
-        </li>
+       
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
             Genre
@@ -45,31 +47,14 @@
                       {% endfor %}
                     </tr>
                     <tr>
-                      {% for genre in genres|slice:"6:"%}
+                      {% for genre in genres|slice:"6:9"%}
                       <td><a class="dropdown-item" href="{{ request.path }}?query={{genre.name}}">{{genre}}</a></td> 
                       {% endfor %}
                     </tr>
-                  
-                    <!-- <tr>
-                      <td><a class="dropdown-item" href="#">Action</a></td>
-                      <td><a class="dropdown-item" href="#">Fantasy</a></td>
-                      <td><a class="dropdown-item" href="#">Supernatural</a></td>
-                    </tr>
                     <tr>
-                      <td><a class="dropdown-item" href="#">Advanture</a></td>
-                      <td><a class="dropdown-item" href="#">Music</a></td>
-                      <td><a class="dropdown-item" href="#">Sports</a></td>
+                      <td><a class="dropdown-item" href="{{ request.path }}">All</a></td>
                     </tr>
-                    <tr>
-                      <td><a class="dropdown-item" href="#">Comedy</a></td>
-                      <td><a class="dropdown-item" href="#">Romance</a></td>
-                      <td><a class="dropdown-item" href="#">Thriller</a></td>
-                    </tr>
-                    <tr>
-                      <td><a class="dropdown-item" href="#">Drama</a></td>
-                      <td><a class="dropdown-item" href="#">Sci-Fi</a></td>
-                      <td><a class="dropdown-item" href="#">Shonen</a></td>
-                    </tr> -->
+                    
                   </tbody>
               </table>     
           </ul> 
@@ -85,7 +70,7 @@
       
       <div class="btn-group ms-auto">
         {% if user.is_authenticated %}
-          <button type="button" class="btn btn-outline-danger"><a href="{% url 'logout' %}" class="login-link">Log Out</a></button>
+          <button type="button" class="btn btn-outline-danger" style="border-radius: 0;"><a href="{% url 'logout' %}" class="login-link">Log Out</a></button>
         {% else %}
           <button class="btn join-btn" type="submit"><a href="{% url 'register' %}" class="join-link">Join Now</a></button>
           <button type="button" class="btn btn-outline-danger"><a href="{% url 'login' %}" class="login-link">Log In</a></button>

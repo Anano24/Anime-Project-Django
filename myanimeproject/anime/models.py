@@ -28,8 +28,11 @@ class Anime(models.Model):
     release_date = models.DateField()
     status = models.CharField(max_length=50)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
-    cover_image = models.ImageField(null=True, blank=True)
+    cover_image = models.ImageField(null=True, blank=True, upload_to='anime_cover_img/')
     subtitle_or_dub = models.ManyToManyField(LanguageOption, related_name='animes')
+
+    class Meta:
+        ordering = ['title']
 
 
     def __str__(self):
@@ -63,6 +66,7 @@ class Episode(models.Model):
     air_date = models.DateField()
     duration = models.DurationField()
     video_file = models.FileField(upload_to='anime_videos/')
+    episod_cover_image = models.ImageField(null=True, blank=True, upload_to='episode_cover_img/')
     
 
     def __str__(self):

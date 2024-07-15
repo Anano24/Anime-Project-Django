@@ -1,0 +1,68 @@
+{% extends 'base.html'%}
+
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+
+    <main>
+        <div class="img-box">
+            <img src="{{ anime.cover_image.url }}" class="detailed-anime-background" alt="{{ anime.title }}">
+            <img src="{{ anime.cover_image.url }}" class="detailed-anime-cover" alt="{{ anime.title }}">
+        </div>
+        <div class="container mb-5">
+        
+            <div class="row align-items-md-stretch">
+                <div class="col-md-7">
+                    <div class="h-100 p-3" style="background-color: none;">
+                        <h2>{{ anime.title }}</h2>
+                        {% for language in anime.subtitle_or_dub.all %}
+                            <small style="color: #f47521">{{ language.name }} |</small>
+                        {% endfor %}
+                        <div>
+                            <small class="card-text">Average Rating: <span style="color: #41748d;">{{ anime.rating }}☆</span></small>
+                            <p><small class="card-text">Status: {{ anime.status }} </small></p>
+                            <small class="card-text">Seasons: {{ anime.total_seasons }}</small>
+                            <p><small class="card-text">Episodes: {{ anime.total_episodes }}</small></p>
+                        </div>
+                        <p style="color:white;">{{ anime.description }}</p>
+                        {% for genre in anime.genres.all %}
+                            <div class="badge genre-badge">{{ genre.name }}</div>
+                        {% endfor %}
+                        <div>
+                            <a href="{% url 'add_to_watchlist' anime.id %}" class="btn add-watchlist-btn"> 
+                                <img class="add-watchlist-icon" src="/media/icons/plus-lg.svg">Add to watchlist
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="h-100 p-5 ">
+                            {% for season in seasons %}
+                            {% if forloop.first %}
+                                {% for episode in season.episodes.all %}
+                                    {% if forloop.first %}
+                                    <!-- Display the first episode image -->
+                                        <div class="card" style="border-radius: 0; background-color: transparent; border: none;">
+                                            <img  src="{{ episode.episod_cover_image.url }}" alt="{{ episod_cover_image.title }}" style="width: 100%; max-width: 400px;">
+                                            <div>
+                                                <a href="{% url 'episode_detail' anime.id season.id episode.id %}" class="btn episode-play-btn"> 
+                                                    <img class="btn-video-icon" src="/media/icons/play.svg">Start watching E1
+                                                </a>
+                                            </div>    
+                                        </div> 
+                                    {% endif %}  
+                                {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
+        
+        
+        </div>
+    </main>
+
+
+
+  {% endblock %}

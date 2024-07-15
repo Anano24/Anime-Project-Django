@@ -1,0 +1,119 @@
+
+.img-box {
+    position: relative;
+    overflow: hidden;
+    margin-top: 69px;
+    height: 240px;
+}
+
+.detailed-anime-cover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 426px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.detailed-anime-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    filter: blur(5px) grayscale(10%) contrast(90%) brightness(40%);
+    height: 240px;
+}
+
+
+.add-watchlist-icon {
+    filter: invert(40%) sepia(80%) saturate(1200%) hue-rotate(355deg) brightness(95%) contrast(101%);
+    margin-right: 5px;
+}
+
+.btn-video-icon {
+    filter: invert(40%) sepia(80%) saturate(1200%) hue-rotate(355deg) brightness(75%) contrast(120%);
+    width: 25px;
+}
+
+.add-watchlist-btn {
+    background-color: none;
+    border-radius: 0;
+    border: 1px solid #f47521;
+    color: #f47521;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+.episode-play-btn {
+    background-color: #f47521;
+    border-radius: 0;
+    border: none;
+    color: black;
+    margin-top: 10px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.add-watchlist-btn:hover{
+    color: white;
+}
+
+
+.episode-play-btn:hover{
+    background-color: none;
+    border: 1px solid #f47521;
+    color: #f47521;
+}
+
+
+
+.genre-badge {
+    background-color: #192e38;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+
+
+.video-box {
+    position: relative;
+    overflow: hidden;
+    margin-top: 69px;
+    width: 100%;
+    margin: auto; /* Center the video box */
+}
+
+.video-styles { 
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    max-height: 450px; /* Set a max height for the video */
+}
+
+/* Adjust the dropdown menu height and enable scrolling */
+.dropdown-scroll {
+    max-height: 300px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+.episodes-dropdown {
+    color: white; 
+    border-radius: 0; 
+    background-color: transparent; 
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.episod-title-in-list {
+    color: white;
+    padding: 10px;
+}
+
+.episode-list-card:hover {
+    background-color: #141519;
+    
+}
+

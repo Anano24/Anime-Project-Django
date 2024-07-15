@@ -1,0 +1,83 @@
+{% extends 'base.html'%}
+
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+
+    <main>
+        <div class="video-box mb-4">
+            <video controls class="video-styles">
+                <source src="{{ episode.video_file.url }}" type="video/mp4" >
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="container mb-5">
+            <div class="row align-items-md-stretch">
+                <div class="col-md-7">
+                    <div class="h-100 p-3" style="background-color: none;">
+                        <p style="color:#f47521;">{{ anime.title }} | <span style="color: #41748d;">{{ anime.rating }}☆</span></p>
+                        <h3 style="color: white;">{{ episode.title }}</h3>
+                        {% for language in anime.subtitle_or_dub.all %}
+                            <small class="card-text">{{ language.name }} | </small>
+                        {% endfor %}
+
+                        <p><small class="card-text">Released on {{ episode.air_date }} </small></p>
+                        <p style="color:white;">{{ episode.summary }}</p>       
+                    </div>       
+                </div>
+
+                <div class="col-md-5">
+                    <div class="h-100 p-3">
+                        <div class="dropdown">
+                            <button id="season-dropdown-button" class="btn btn-secondary dropdown-toggle episodes-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Season {{ season.season_number }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%; border-radius: 0;">
+                                {% for season_item in seasons %}
+                                    <li>
+                                        <a class="dropdown-item season-dropdown-item" href="#" data-season-id="{{ season_item.id }}" data-anime-id="{{ anime.id }}" data-season-number="{{ season_item.season_number }}">
+                                            Season {{ season_item.season_number }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>   
+                        
+                        <div id="episode-list" class="episode-list mt-3">
+                            {% include 'anime/episode_list.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        $(document).ready(function() {
+            $('.season-dropdown-item').on('click', function(event) {
+                event.preventDefault();
+        
+                var seasonId = $(this).data('season-id');
+                var seasonNumber = $(this).data('season-number');
+                var animeId = $(this).data('anime-id');
+                console.log('Selected season ID:', seasonId);
+                console.log('Selected anime ID:', animeId);
+        
+                $.ajax({
+                    url: `/get_episodes/${animeId}/season/${seasonId}/`,
+                    type: 'GET',
+                    success: function(response) {
+                        $('#episode-list').html(response.html);
+                        console.log('AJAX response received');
+        
+                        // Update the dropdown button text
+                        $('#season-dropdown-button').text('Season ' + seasonNumber);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

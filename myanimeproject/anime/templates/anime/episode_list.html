@@ -1,0 +1,23 @@
+
+
+
+<div class="card text-bg-dark mb-3 dropdown-scroll" >
+    {% for episode in episodes %}
+    <a href="{% url 'episode_detail' episode.season.anime.id episode.season.id episode.id %}" style="text-decoration: none;">
+
+        <div class="row g-0 mb-2 episode-list-card">
+            <div class="col-md-4">   
+                <img class="img-fluid" src="{{ episode.episod_cover_image.url }}" alt="{{ episode.title }}" style="width: 100%; max-width: 400px;">    
+            </div>
+        
+            <div class="col-md-8">
+                <div>
+                    <h6 class="episod-title-in-list">{{ episode.title }}</h6>
+                    <p class="card-text"><small style="margin-left: 10px;">{{ episode.duration}}</small></p>
+                </div>
+            </div>
+     
+        </div>
+    </a> 
+    {% endfor %}
+</div>

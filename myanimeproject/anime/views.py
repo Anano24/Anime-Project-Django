@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
-from .models import Anime, User, Genre, LanguageOption
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Anime, User, Genre, LanguageOption, Episode, Season
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import MyUserCreationForm, AnimeAddForm
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.contrib import messages
 
 
 
@@ -75,7 +78,9 @@ def login_page(request):
         try:
             user = User.objects.get(username=username)
         except:
-            pass
+            messages.error(request, "Username doesn't exist!")
+            return redirect('login')
+
 
         user = authenticate(request, username=username, password=password)
 
@@ -83,7 +88,7 @@ def login_page(request):
             login(request, user)
             return redirect('home')
         else:
-            pass
+            messages.error(request, "Username or password is incorrect!")
 
     context = {'page': page}
     return render(request, 'anime/login_register.html', context)
@@ -142,3 +147,37 @@ def add_anime(request):
     
     context = {'form': form, 'genres': genres, 'subtitle_or_dub': subtitle_or_dub}
     return render(request, 'anime/add_anime.html', context)
+
+
+
+def detailed_anime(request, id, season_id=None):
+    anime = Anime.objects.get(id=id)
+    seasons = anime.seasons.all()
+
+    if season_id:
+        season = get_object_or_404(Season, id=season_id, anime=anime)
+    else:
+        season = seasons.first()
+
+
+    context = {'anime': anime, 'seasons': seasons, 'season': season}
+    return render(request, 'anime/detailed_anime.html', context)
+
+
+def episode_detail(request, anime_id, season_id, episode_id):
+    anime = get_object_or_404(Anime, id=anime_id)
+    season = get_object_or_404(Season, id=season_id, anime=anime)
+    episode = get_object_or_404(Episode, id=episode_id, season=season)
+    seasons = anime.seasons.all()
+
+    context = {'anime': anime, 'season': season, 'episode':episode, 'seasons': seasons}
+    return render(request, 'anime/episode_detail.html', context)
+
+
+def get_episodes(request, anime_id, season_id):
+    anime = get_object_or_404(Anime, id=anime_id)
+    season = get_object_or_404(Season, id=season_id, anime=anime)
+    episodes = season.episodes.all()
+
+    html = render_to_string('anime/episode_list.html', {'episodes': episodes})
+    return JsonResponse({'html': html})

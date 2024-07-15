@@ -15,7 +15,7 @@
 
                     <div class="overlay">
                         <div class="card-btn-box">
-                            <a href="#">
+                            <a href="{% url 'detailed_anime' anime.id %}">
                                 <img class="video-btn"  src="/media/icons/play.svg">
                             </a>
                             {% if anime in request.user.animes.all %}
@@ -37,8 +37,7 @@
                             <small class="card-text" style="color: #f47521">{{ language.name }} |</small>
                         {% endfor %}
                         
-                        <p class="card-text">{{ anime.description |slice:":60" }}</p>
-
+                        <p class="card-text mb-2">{{ anime.description |slice:":60" }}</p>
                         <small class="card-text">Seasons: {{ anime.total_seasons }}</small>
                         <br>
                         <small class="card-text">Episodes: {{ anime.total_episodes }}</small>
