@@ -17,3 +17,9 @@ class AnimeAddForm(ModelForm):
         model = Anime
         fields = '__all__'
 
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['avatar', 'username', 'bio', 'email']
+

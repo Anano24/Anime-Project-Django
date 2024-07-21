@@ -69,8 +69,14 @@
       </form>
       
       <div class="btn-group ms-auto">
-        {% if user.is_authenticated %}
-          <button type="button" class="btn btn-outline-danger" style="border-radius: 0;"><a href="{% url 'logout' %}" class="login-link">Log Out</a></button>
+        {% if request.user.is_authenticated %}
+          
+          <div class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'profile' request.user.id %}">
+              <img src="{{ request.user.avatar.url }}" class="profile-icon" />
+            </a>
+          </div>
+          <button type="button" class="btn btn-danger" style="border-radius: 5px;"><a href="{% url 'logout' %}" class="login-link">Log Out</a></button>
         {% else %}
           <button class="btn join-btn" type="submit"><a href="{% url 'register' %}" class="join-link">Join Now</a></button>
           <button type="button" class="btn btn-outline-danger"><a href="{% url 'login' %}" class="login-link">Log In</a></button>

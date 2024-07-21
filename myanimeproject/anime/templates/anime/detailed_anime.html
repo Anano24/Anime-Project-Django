@@ -29,9 +29,16 @@
                             <div class="badge genre-badge">{{ genre.name }}</div>
                         {% endfor %}
                         <div>
-                            <a href="{% url 'add_to_watchlist' anime.id %}" class="btn add-watchlist-btn"> 
-                                <img class="add-watchlist-icon" src="/media/icons/plus-lg.svg">Add to watchlist
-                            </a>
+                            
+                            {% if anime in request.user.animes.all %}
+                                <a href="{% url 'delete_from_watchlist' anime.id %}" class="btn add-watchlist-btn">
+                                    <img class="delete-watchlist-icon" src="/media/icons/x-lg.svg">Delete from watchlist 
+                                </a>
+                            {% else %}
+                                <a href="{% url 'add_to_watchlist' anime.id %}" class="btn add-watchlist-btn"> 
+                                    <img class="add-watchlist-icon" src="/media/icons/plus-lg.svg">Add to watchlist
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

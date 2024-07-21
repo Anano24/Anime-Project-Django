@@ -3,7 +3,7 @@ from .models import Anime, User, Genre, LanguageOption, Episode, Season
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import MyUserCreationForm, AnimeAddForm
+from .forms import MyUserCreationForm, AnimeAddForm, UserForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.contrib import messages
@@ -61,7 +61,17 @@ def delete_from_watchlist(request, id):
         request.user.animes.remove(anime)
         return redirect('profile', request.user.id)
     
-    return render(request, 'anime/delete_from_watchlist.html', {'anime': anime})
+    return render(request, 'anime/delete_confirm.html', {'anime': anime})
+
+
+def delete_anime(request, id):
+    anime = Anime.objects.get(id=id)
+    
+    if request.method == "POST":
+        anime.cover_image.delete()
+        anime.delete()
+        return redirect('home')
+    return render(request, 'anime/delete_confirm.html', {'anime': anime})
 
 
 
@@ -119,7 +129,7 @@ def register_page(request):
     return render(request, 'anime/login_register.html', context)
 
 
-
+@login_required(login_url='login')
 def add_anime(request):
     form = AnimeAddForm()
     genres = Genre.objects.all()
@@ -181,3 +191,16 @@ def get_episodes(request, anime_id, season_id):
 
     html = render_to_string('anime/episode_list.html', {'episodes': episodes})
     return JsonResponse({'html': html})
+
+
+@login_required(login_url='login')
+def update_profile(request):
+    user = request.user
+    form = UserForm(instance=user)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', user.id)
+    return render(request, 'anime/update_profile.html', {'form': form})

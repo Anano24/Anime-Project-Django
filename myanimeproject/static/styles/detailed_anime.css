@@ -30,7 +30,7 @@
 }
 
 
-.add-watchlist-icon {
+.add-watchlist-icon, .delete-watchlist-icon {
     filter: invert(40%) sepia(80%) saturate(1200%) hue-rotate(355deg) brightness(95%) contrast(101%);
     margin-right: 5px;
 }

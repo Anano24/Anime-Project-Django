@@ -149,10 +149,27 @@ h2 {
     width: 40px; 
 }
 
-.bookmark-btn:hover, .video-btn:hover, .watchlist-delete-btn:hover{
+.delete-anime-btn{
+    filter: invert(19%) sepia(81%) saturate(6181%) hue-rotate(349deg) brightness(93%) contrast(91%);
+    width: 35px;
+    margin-left: 10px;
+}
+
+.bookmark-btn:hover, .video-btn:hover, .watchlist-delete-btn:hover, .delete-anime-btn:hover{
     transition: transform 0.3s;
     transform: scale(1.4);
 }
+
+
+.profile-icon {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    margin-right: 20px;
+    border: 1px solid #f47521
+}
+
+
 
 
 
