@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 
+
 {% block title %} Profile {% endblock %}
 
 {% block content %}
@@ -23,7 +24,8 @@
 
                         <p><small class="card-text">Released on {{ episode.air_date }} </small></p>
                         <p style="color:white;">{{ episode.summary }}</p>       
-                    </div>       
+                    </div> 
+     
                 </div>
 
                 <div class="col-md-5">
@@ -50,6 +52,8 @@
                 </div>
             </div>
         </div>
+
+
     </main>
     <script>
         $(document).ready(function() {

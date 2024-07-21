@@ -19,6 +19,7 @@ urlpatterns = [
     path('get_episodes/<int:anime_id>/season/<int:season_id>/', views.get_episodes, name='get_episodes'),
     path('delete_anime/<str:id>/', views.delete_anime, name='delete_anime'),
     path('update_profile/', views.update_profile, name='update_profile'),
+    path('delete_comment/<str:comment_id>/', views.delete_comment, name='delete_comment'),
 
 ]
 

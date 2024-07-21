@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Anime, User, Genre, LanguageOption, Episode, Season
+from .models import Anime, User, Genre, LanguageOption, Episode, Season, Comment
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -61,9 +61,11 @@ def delete_from_watchlist(request, id):
         request.user.animes.remove(anime)
         return redirect('profile', request.user.id)
     
-    return render(request, 'anime/delete_confirm.html', {'anime': anime})
+    return render(request, 'anime/delete_confirm.html', {'obj': anime})
 
 
+
+@login_required(login_url='login')
 def delete_anime(request, id):
     anime = Anime.objects.get(id=id)
     
@@ -71,7 +73,7 @@ def delete_anime(request, id):
         anime.cover_image.delete()
         anime.delete()
         return redirect('home')
-    return render(request, 'anime/delete_confirm.html', {'anime': anime})
+    return render(request, 'anime/delete_confirm.html', {'obj': anime})
 
 
 
@@ -163,14 +165,24 @@ def add_anime(request):
 def detailed_anime(request, id, season_id=None):
     anime = Anime.objects.get(id=id)
     seasons = anime.seasons.all()
+    anime_comments = anime.comment_set.all().order_by('-created')
 
     if season_id:
         season = get_object_or_404(Season, id=season_id, anime=anime)
     else:
         season = seasons.first()
 
+    
+    if request.method == "POST":
+        comment = Comment.objects.create(
+            user = request.user,
+            anime = anime,
+            body = request.POST.get('body')
+        )
+        return redirect('detailed_anime', id=id)  # Redirect after POST
 
-    context = {'anime': anime, 'seasons': seasons, 'season': season}
+
+    context = {'anime': anime, 'seasons': seasons, 'season': season, 'comments': anime_comments}
     return render(request, 'anime/detailed_anime.html', context)
 
 
@@ -182,6 +194,19 @@ def episode_detail(request, anime_id, season_id, episode_id):
 
     context = {'anime': anime, 'season': season, 'episode':episode, 'seasons': seasons}
     return render(request, 'anime/episode_detail.html', context)
+
+
+
+@login_required(login_url='login')
+def delete_comment(request, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    anime = comment.anime
+    
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('detailed_anime', anime.id)
+    return render(request, 'anime/delete_confirm.html', {'obj': comment})
+
 
 
 def get_episodes(request, anime_id, season_id):

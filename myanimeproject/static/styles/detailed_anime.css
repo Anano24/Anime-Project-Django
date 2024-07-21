@@ -117,3 +117,13 @@
     
 }
 
+.comment-btn {
+    border-radius: 0; 
+    width: 20%; 
+    background-color: #f47521;
+}
+
+.comment-btn:hover {
+    background-color:#192e38;
+}
+

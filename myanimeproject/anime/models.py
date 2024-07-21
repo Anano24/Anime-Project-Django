@@ -78,3 +78,17 @@ class User(AbstractUser):
     animes = models.ManyToManyField(Anime, blank=True, related_name='users')
     bio = models.TextField(null=True)
     avatar = models.ImageField(null=True, default='blank-profile-picture-973460_1280.png', upload_to='profile_img/')
+
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.body

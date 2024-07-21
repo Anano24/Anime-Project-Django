@@ -1,18 +1,17 @@
 {% extends 'base.html'%}
 
-{% block title %} Delete from watchlist {% endblock %}
+{% block title %} Delete page {% endblock %}
 
 
 {% block content %}
     <div class="container mt-5">
         <form method="POST", action="">
             {% csrf_token %}
-            <h3 style="margin-top: 120px; color: white;">Are you sure you want to delete "{{ anime }}"?</h3>
+            <h3 style="margin-top: 120px; color: white;">Are you sure you want to delete "{{ obj }}"?</h3>
             <input type="submit" value="Delete" class="btn btn-danger">
-            <a href="{% url 'profile' request.user.id %}" class="btn btn-secondary" >Cancel</a>
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" >Cancel</a>
 
         </form>
     </div>
 
-        
 {% endblock %}

@@ -65,8 +65,51 @@
                     </div>
                 </div>
             </div>
+        </div>
+
         
-        
+        <div class="container">
+            <div class="card" style="background-color: rgba(0, 0, 0, 0.932); border-radius: 0; padding: 5%; margin: 6.25rem 0 6.25rem; color: #ffffff;">
+                <h3 style="margin-bottom: 30px;">Comments</h3>
+                {% if user.is_authenticated %}
+                <div class="card mb-5">
+                    <form method="POST", action="">
+                        {% csrf_token %}
+
+                        <div class="form-floating">
+                            <textarea name="body" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Leave a comment here</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary comment-btn m-3" id="liveToastBtn" >Post</button>
+                    </form>  
+                </div>
+                {% endif %}
+                {% for comment in comments %}
+                    <div class="card text-bg-dark mb-3 p-3">
+                        <div class="row g-0">
+                            <div class="col-md-1">
+                                <a href="{% url 'profile' comment.user.id %}">
+                                    <img src="{{ comment.user.avatar.url }}" style="border-radius: 50%; width: 60px; height: 60px;"/>
+                                </a>
+                            </div>
+                            <div class="col-md-10">
+                                <p style="margin-bottom: 5px; color: #f47521;">{{comment.user.username}}</p>
+                                <p style="margin: 0;">{{ comment.body }}</p>
+                                <p style="margin: 0;"><small class="card-text" >{{ comment.created | timesince }} ago</small></p>
+                                
+                            </div>
+                            <div class="col-md-1" data-bs-theme="dark">
+                                {% if request.user == comment.user %}
+                                    <a href="{% url 'delete_comment' comment.id %}">
+                                        <button type="button" class="btn-close" aria-label="Close"></button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> 
         </div>
     </main>
 
