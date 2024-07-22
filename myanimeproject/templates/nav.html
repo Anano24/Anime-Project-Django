@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-dark" data-bs-theme="dark">
   <div class="container">
-    <a class="navbar-brand" href="{% url 'home' %}">Anime</a>
+    <a class="navbar-brand" href="{% url 'anime:home' %}">Anime</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse d-flex align-items-center" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+          <a class="nav-link" aria-current="page" href="{% url 'anime:home' %}">Home</a>
         </li>
 
         
@@ -17,13 +17,13 @@
                 User Menu
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'profile' request.user.id %}">Profile</a></li>
-                <li><a class="dropdown-item" href="{% url 'add' %}">Add new anime</a></li>
+                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.id %}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'anime:add' %}">Add new anime</a></li>
               </ul>
             </li>
             {% elif request.user.is_authenticated %}
               <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="{% url 'profile' request.user.id %}">Profile</a>
+                  <a class="nav-link" aria-current="page" href="{% url 'users:profile' request.user.id %}">Profile</a>
               </li>
 
         {% endif %}
@@ -72,14 +72,14 @@
         {% if request.user.is_authenticated %}
           
           <div class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'profile' request.user.id %}">
+            <a class="nav-link" aria-current="page" href="{% url 'users:profile' request.user.id %}">
               <img src="{{ request.user.avatar.url }}" class="profile-icon" />
             </a>
           </div>
-          <button type="button" class="btn btn-danger" style="border-radius: 5px;"><a href="{% url 'logout' %}" class="login-link">Log Out</a></button>
+          <button type="button" class="btn btn-danger" style="border-radius: 5px;"><a href="{% url 'users:logout' %}" class="login-link">Log Out</a></button>
         {% else %}
-          <button class="btn join-btn" type="submit"><a href="{% url 'register' %}" class="join-link">Join Now</a></button>
-          <button type="button" class="btn btn-outline-danger"><a href="{% url 'login' %}" class="login-link">Log In</a></button>
+          <button class="btn join-btn" type="submit"><a href="{% url 'users:register' %}" class="join-link">Join Now</a></button>
+          <button type="button" class="btn btn-outline-danger"><a href="{% url 'users:login' %}" class="login-link">Log In</a></button>
         {% endif %}
       </div>
     </div>

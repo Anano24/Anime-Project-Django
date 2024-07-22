@@ -15,20 +15,20 @@
 
                     <div class="overlay">
                         <div class="card-btn-box">
-                            <a href="{% url 'detailed_anime' anime.id %}">
+                            <a href="{% url 'anime:detailed_anime' anime.id %}">
                                 <img class="video-btn"  src="/media/icons/play.svg">
                             </a>
                             {% if anime in request.user.animes.all %}
-                                <a href="{% url 'delete_from_watchlist' anime.id %}"> 
+                                <a href="{% url 'users:delete_from_watchlist' anime.id %}"> 
                                     <img class="watchlist-delete-btn" src="/media/icons/x-lg.svg">
                                 </a>
                             {% else %}
-                                <a href="{% url 'add_to_watchlist' anime.id %}"> 
+                                <a href="{% url 'users:add_to_watchlist' anime.id %}"> 
                                     <img class="bookmark-btn" src="/media/icons/plus-lg.svg">
                                 </a>
                             {% endif %}
                             {% if request.user.is_authenticated and request.user.is_superuser %}
-                                <a href="{% url 'delete_anime' anime.id %}"> 
+                                <a href="{% url 'anime:delete_anime' anime.id %}"> 
                                     <img class="delete-anime-btn" src="/media/icons/trash3.svg">
                                 </a>   
                             {% endif %}

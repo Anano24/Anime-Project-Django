@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Anime, User, Genre, LanguageOption, Episode, Season, Comment
+from .models import Anime, Genre, LanguageOption, Episode, Season, Comment
+from users.models import User
 from django.db.models import Q
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import MyUserCreationForm, AnimeAddForm, UserForm
+from .forms import AnimeAddForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.contrib import messages
 
 
 
@@ -28,41 +27,6 @@ def home(request):
     return render(request, 'anime/home.html', context)
 
 
-@login_required(login_url='login')
-def profile(request, pk):
-    user = User.objects.get(id=int(pk))
-    query = request.GET.get("query")
-    genres = Genre.objects.all()
-
-    if query:
-        animes = user.animes.filter(Q(title__icontains=query) | Q(description__icontains=query) | Q(genres__name__icontains=query))
-        animes= list(set(animes))
-    else:
-        animes = user.animes.all()
-        
-    heading = "My Animes"
-    context = {'anime_list': animes, 'user': user, 'heading': heading, 'genres': genres}
-    return render(request, 'anime/profile.html', context)
-
-
-@login_required(login_url='login')
-def add_to_watchlist(request, id):
-    anime = Anime.objects.get(id=id)
-    user = request.user
-    user.animes.add(anime)
-    return redirect('profile', user.id)
-
-
-@login_required(login_url='login')
-def delete_from_watchlist(request, id):
-    anime = Anime.objects.get(id=id)
-
-    if request.method == "POST":
-        request.user.animes.remove(anime)
-        return redirect('profile', request.user.id)
-    
-    return render(request, 'anime/delete_confirm.html', {'obj': anime})
-
 
 
 @login_required(login_url='login')
@@ -72,63 +36,9 @@ def delete_anime(request, id):
     if request.method == "POST":
         anime.cover_image.delete()
         anime.delete()
-        return redirect('home')
+        return redirect('anime:home')
     return render(request, 'anime/delete_confirm.html', {'obj': anime})
 
-
-
-def login_page(request):
-    page = 'login'
-
-    if request.user.is_authenticated:
-        return redirect('home')
-    
-    if request.method == "POST":
-        username = request.POST.get('username').lower()
-        password = request.POST.get('password')
-
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, "Username doesn't exist!")
-            return redirect('login')
-
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, "Username or password is incorrect!")
-
-    context = {'page': page}
-    return render(request, 'anime/login_register.html', context)
-
-
-
-
-def logout_page(request):
-    logout(request)
-    return redirect('login')
-
-
-
-def register_page(request):
-    form = MyUserCreationForm()
-
-    if request.method == "POST":
-        form = MyUserCreationForm(request.POST)
-
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            login(request, user)
-            return redirect('home')
-
-    context = {'form': form}
-    return render(request, 'anime/login_register.html', context)
 
 
 @login_required(login_url='login')
@@ -155,7 +65,7 @@ def add_anime(request):
         new_anime.genres.add(genre)
         new_anime.subtitle_or_dub.add(languageoption)
 
-        return redirect('home')
+        return redirect('anime:home')
     
     context = {'form': form, 'genres': genres, 'subtitle_or_dub': subtitle_or_dub}
     return render(request, 'anime/add_anime.html', context)
@@ -179,7 +89,7 @@ def detailed_anime(request, id, season_id=None):
             anime = anime,
             body = request.POST.get('body')
         )
-        return redirect('detailed_anime', id=id)  # Redirect after POST
+        return redirect('anime:detailed_anime', id=id)  # Redirect after POST
 
 
     context = {'anime': anime, 'seasons': seasons, 'season': season, 'comments': anime_comments}
@@ -204,7 +114,7 @@ def delete_comment(request, comment_id):
     
     if request.method == 'POST':
         comment.delete()
-        return redirect('detailed_anime', anime.id)
+        return redirect('anime:detailed_anime', anime.id)
     return render(request, 'anime/delete_confirm.html', {'obj': comment})
 
 
@@ -218,14 +128,3 @@ def get_episodes(request, anime_id, season_id):
     return JsonResponse({'html': html})
 
 
-@login_required(login_url='login')
-def update_profile(request):
-    user = request.user
-    form = UserForm(instance=user)
-
-    if request.method == 'POST':
-        form = UserForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile', user.id)
-    return render(request, 'anime/update_profile.html', {'form': form})

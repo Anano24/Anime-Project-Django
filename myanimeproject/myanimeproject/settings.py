@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'crispy_forms', 
     'crispy_bootstrap5',
+    'users.apps.UsersConfig',
+    'api.apps.ApiConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +137,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'anime.User'
+AUTH_USER_MODEL = 'users.User'
 
 
 MEDIA_URL = '/media/'

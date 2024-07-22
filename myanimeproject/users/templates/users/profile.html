@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{% block title %} Profile {% endblock %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="margin-top: 120px; color: white;">I am {{user}}</h1>
+        <a href="{% url 'users:update_profile' %}" class="btn btn-danger login-btn" style="border-radius: 0; width: 30%;">Update Profile</a>
+
+    </div>
+
+
+    {% include 'anime/animes.html' %}
+    
+
+        
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{% block title %} Delete page {% endblock %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <form method="POST", action="">
+            {% csrf_token %}
+            <h3 style="margin-top: 120px; color: white;">Are you sure you want to delete "{{ obj }}"?</h3>
+            <input type="submit" value="Delete" class="btn btn-danger">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" >Cancel</a>
+
+        </form>
+    </div>
+
+{% endblock %}

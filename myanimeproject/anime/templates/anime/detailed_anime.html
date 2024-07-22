@@ -31,11 +31,11 @@
                         <div>
                             
                             {% if anime in request.user.animes.all %}
-                                <a href="{% url 'delete_from_watchlist' anime.id %}" class="btn add-watchlist-btn">
+                                <a href="{% url 'users:delete_from_watchlist' anime.id %}" class="btn add-watchlist-btn">
                                     <img class="delete-watchlist-icon" src="/media/icons/x-lg.svg">Delete from watchlist 
                                 </a>
                             {% else %}
-                                <a href="{% url 'add_to_watchlist' anime.id %}" class="btn add-watchlist-btn"> 
+                                <a href="{% url 'users:add_to_watchlist' anime.id %}" class="btn add-watchlist-btn"> 
                                     <img class="add-watchlist-icon" src="/media/icons/plus-lg.svg">Add to watchlist
                                 </a>
                             {% endif %}
@@ -53,7 +53,7 @@
                                         <div class="card" style="border-radius: 0; background-color: transparent; border: none;">
                                             <img  src="{{ episode.episod_cover_image.url }}" alt="{{ episod_cover_image.title }}" style="width: 100%; max-width: 400px;">
                                             <div>
-                                                <a href="{% url 'episode_detail' anime.id season.id episode.id %}" class="btn episode-play-btn"> 
+                                                <a href="{% url 'anime:episode_detail' anime.id season.id episode.id %}" class="btn episode-play-btn"> 
                                                     <img class="btn-video-icon" src="/media/icons/play.svg">Start watching E1
                                                 </a>
                                             </div>    
@@ -89,7 +89,7 @@
                     <div class="card text-bg-dark mb-3 p-3">
                         <div class="row g-0">
                             <div class="col-md-1">
-                                <a href="{% url 'profile' comment.user.id %}">
+                                <a href="{% url 'users:profile' comment.user.id %}">
                                     <img src="{{ comment.user.avatar.url }}" style="border-radius: 50%; width: 60px; height: 60px;"/>
                                 </a>
                             </div>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="col-md-1" data-bs-theme="dark">
                                 {% if request.user == comment.user %}
-                                    <a href="{% url 'delete_comment' comment.id %}">
+                                    <a href="{% url 'anime:delete_comment' comment.id %}">
                                         <button type="button" class="btn-close" aria-label="Close"></button>
                                     </a>
                                 {% endif %}

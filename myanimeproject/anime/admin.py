@@ -1,12 +1,10 @@
 from django.contrib import admin
-from .models import Anime, User, Genre, Season, Episode, LanguageOption, Comment
+from .models import Anime, Genre, Season, Episode, LanguageOption, Comment
 
 
 # Register your models here.
 
 
-
-admin.site.register(User)
 admin.site.register(Genre)
 admin.site.register(LanguageOption)
 admin.site.register(Anime)
