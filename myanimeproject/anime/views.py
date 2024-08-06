@@ -12,20 +12,43 @@ from django.template.loader import render_to_string
 
 
 def home(request):
+    anime_list = Anime.objects.all()
+    genres = Genre.objects.all()
+    popular_animes = Anime.objects.filter(rating__gte=4.5)  # Adjust the rating threshold as needed
+    heading = "Most Popular"
+    context = {'anime_list': anime_list, 'genres': genres, 'heading':heading, 'popular_animes': popular_animes}
+    return render(request, 'anime/home.html', context)
+
+
+
+def search_results(request):
     query = request.GET.get("query")
     genres = Genre.objects.all()
-
+    genre_name = request.GET.get("genre")
+    
     if query:
         anime_list = Anime.objects.filter(Q(title__icontains=query) | Q(description__icontains=query) | Q(genres__name__icontains=query))
         anime_list = list(set(anime_list))
+    elif genre_name:
+        anime_list = Anime.objects.filter(genres__name=genre_name)
     else:
         anime_list = Anime.objects.all()
+
+    heading = "Search results"
+    context = {'anime_list': anime_list, 'genres': genres, 'heading': heading}
+
+    return render(request, 'anime/search_results.html', context)
+
+
+
+def all_anime(request):
+    anime_list = Anime.objects.all()
+    genres = Genre.objects.all()
 
     heading = "All Animes"
     context = {'anime_list': anime_list, 'heading': heading, 'genres': genres}
 
-    return render(request, 'anime/home.html', context)
-
+    return render(request, 'anime/all_anime.html', context)
 
 
 
@@ -73,6 +96,7 @@ def add_anime(request):
 
 
 def detailed_anime(request, id, season_id=None):
+    genres = Genre.objects.all()
     anime = Anime.objects.get(id=id)
     seasons = anime.seasons.all()
     anime_comments = anime.comment_set.all().order_by('-created')
@@ -92,17 +116,18 @@ def detailed_anime(request, id, season_id=None):
         return redirect('anime:detailed_anime', id=id)  # Redirect after POST
 
 
-    context = {'anime': anime, 'seasons': seasons, 'season': season, 'comments': anime_comments}
+    context = {'anime': anime, 'seasons': seasons, 'season': season, 'comments': anime_comments, 'genres': genres}
     return render(request, 'anime/detailed_anime.html', context)
 
 
 def episode_detail(request, anime_id, season_id, episode_id):
+    genres = Genre.objects.all()
     anime = get_object_or_404(Anime, id=anime_id)
     season = get_object_or_404(Season, id=season_id, anime=anime)
     episode = get_object_or_404(Episode, id=episode_id, season=season)
     seasons = anime.seasons.all()
 
-    context = {'anime': anime, 'season': season, 'episode':episode, 'seasons': seasons}
+    context = {'anime': anime, 'season': season, 'episode':episode, 'seasons': seasons, 'genres':genres}
     return render(request, 'anime/episode_detail.html', context)
 
 

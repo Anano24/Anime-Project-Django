@@ -9,6 +9,8 @@ app_name = 'anime'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('all_anime', views.all_anime, name='all_anime'),
+    path('search/', views.search_results, name='search_results'),
     path('add/', views.add_anime, name='add'),
     path('detailed_anime/<str:id>/', views.detailed_anime, name='detailed_anime'),
     path('detailed_anime/<str:anime_id>/season/<str:season_id>/episode/<str:episode_id>/', views.episode_detail, name='episode_detail'),

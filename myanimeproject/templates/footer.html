@@ -1,0 +1,52 @@
+
+<hr style="color: rgba(255, 255, 255, 0.568); margin-top: 150px;">
+<div class="container">
+    
+    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-6 py-6 my-5">
+      <div class="col mb-3">
+        <!-- <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none" previewlistener="true">
+          <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        </a> -->
+        <p style="color: rgba(255, 255, 255, 0.568);">© 2024</p>
+      </div>
+  
+      <div class="col mb-3">
+  
+      </div>
+  
+      <div class="col mb-3">
+        <h5>Navigation</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="{% url 'anime:home' %}" class="nav-link p-0 text-body-secondary">Home</a></li>
+          {% if request.user.is_authenticated %}
+            <li class="nav-item mb-2"><a href="{% url 'users:profile' request.user.id %}" class="nav-link p-0 text-body-secondary">Profile</a></li>
+          {% else %}
+            <li class="nav-item mb-2"><a href="{% url 'users:login' %}" class="nav-link p-0 text-body-secondary">Profile</a></li>
+          {% endif %}
+
+        </ul>
+      </div>
+  
+      <div class="col mb-3">
+        <h5>Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="{% url 'anime:all_anime' %}" class="nav-link p-0 text-body-secondary">All</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Popular</a></li>
+        </ul>
+      </div>
+  
+      <div class="col mb-3">
+        <h5>Account</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="{% url 'users:register' %}" class="nav-link p-0 text-body-secondary">Create Account</a></li>
+          {% if request.user.is_authenticated %}
+            <li class="nav-item mb-2"><a href="{% url 'users:logout' %}" class="nav-link p-0 text-body-secondary">Log Out</a></li>
+          {% else %}
+            <li class="nav-item mb-2"><a href="{% url 'users:login' %}" class="nav-link p-0 text-body-secondary">Log In</a></li>
+          {% endif %}
+
+          
+        </ul>
+      </div>
+    </footer>
+  </div>

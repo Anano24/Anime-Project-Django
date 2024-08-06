@@ -31,6 +31,25 @@
     font-weight: 700;
 }
 
+.all-btn {
+    width: 10%;
+    height: 40px;
+    background-color: none;
+    border: 2px solid #f47521;
+    border-radius: 0;
+    color: #f47521;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px; /* Center text vertically */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.all-btn:hover {
+    background-color: #f47521;
+    color: #ffffff;
+}
+
 .form-control1 {
     background-color: black;
     color: rgb(114, 114, 114);
@@ -58,6 +77,21 @@
     color:#f47521;
     margin: 20px 0 0 10px;
     font-weight: 400;
+}
+
+.profile-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profile-avatar {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    margin-top: 120px;
+    border: 1px solid #f47521
 }
 
 

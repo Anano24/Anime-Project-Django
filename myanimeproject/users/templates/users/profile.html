@@ -4,14 +4,41 @@
 
 
 {% block content %}
-    <div class="container mt-5">
-        <h1 style="margin-top: 120px; color: white;">I am {{user}}</h1>
-        <a href="{% url 'users:update_profile' %}" class="btn btn-danger login-btn" style="border-radius: 0; width: 30%;">Update Profile</a>
+    <div class="profile-box">
+        <div class="nav-item">
+              <img src="{{ request.user.avatar.url }}" class="profile-avatar" />
+        </div>
+
+        <h1 style="margin-top: 20px; color: white;">{{user}}</h1>
+        <p style="color: rgba(255, 255, 255, 0.568);">{{user.bio}}</p>
+        <a href="{% url 'users:update_profile' %}" class="btn btn-danger login-btn" style="border-radius: 0; width: 20%; margin-top: 20px;">Update Profile</a>
 
     </div>
 
 
-    {% include 'anime/animes.html' %}
+
+    <div class="container">
+            
+            <h2 style="margin-top: 120px; text-align: center;"> My animes </h2>
+            <form class="d-flex mx-auto" style="width:50%;" role="search" action="{% url 'users:profile' user.id %}" method="GET" >
+                <div class="input-group">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query" placeholder="Search your watchlist...">
+                <button class="btn btn-outline-danger"  type="submit">Search</button>
+                </div>
+            </form>
+            <hr style="color: rgba(255, 255, 255, 0.568);">
+            
+    </div>  
+
+    {% if anime_list %}
+        
+        {% include 'anime/animes.html' %} 
+            
+    {% else %}
+        
+        <h3 style="margin-top: 70px; margin-bottom: 100px; color: white; text-align: center;">No anime found in your watchlist</h3>
+        
+    {% endif %}
     
 
         

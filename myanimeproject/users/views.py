@@ -22,8 +22,7 @@ def profile(request, pk):
     else:
         animes = user.animes.all()
         
-    heading = "My Animes"
-    context = {'anime_list': animes, 'user': user, 'heading': heading, 'genres': genres}
+    context = {'anime_list': animes, 'user': user, 'genres': genres}
     return render(request, 'users/profile.html', context)
 
 
@@ -51,6 +50,7 @@ def delete_from_watchlist(request, id):
 
 
 def login_page(request):
+    genres = Genre.objects.all()
     page = 'login'
 
     if request.user.is_authenticated:
@@ -75,7 +75,7 @@ def login_page(request):
         else:
             messages.error(request, "Username or password is incorrect!")
 
-    context = {'page': page}
+    context = {'page': page, 'genres': genres}
     return render(request, 'users/login_register.html', context)
 
 
@@ -88,6 +88,7 @@ def logout_page(request):
 
 
 def register_page(request):
+    genres = Genre.objects.all()
     form = MyUserCreationForm()
 
     if request.method == "POST":
@@ -100,7 +101,7 @@ def register_page(request):
             login(request, user)
             return redirect('anime:home')
 
-    context = {'form': form}
+    context = {'form': form, 'genres': genres}
     return render(request, 'users/login_register.html', context)
 
 

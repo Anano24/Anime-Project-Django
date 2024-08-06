@@ -38,21 +38,22 @@
                   <tbody>
                     <tr>
                       {% for genre in genres|slice:":3"%}
-                      <td><a class="dropdown-item" href="{{ request.path }}?query={{genre.name}}">{{genre}}</a></td> 
+                      <td><a class="dropdown-item" href="{% url 'anime:search_results' %}?genre={{ genre.name }}">{{genre.name}}</a></td> 
                       {% endfor %}
                     </tr>
                     <tr>
                       {% for genre in genres|slice:"3:6"%}
-                      <td><a class="dropdown-item" href="{{ request.path }}?query={{genre.name}}">{{genre}}</a></td> 
+                      <td><a class="dropdown-item" href="{% url 'anime:search_results' %}?genre={{ genre.name }}">{{genre.name}}</a></td> 
                       {% endfor %}
                     </tr>
                     <tr>
                       {% for genre in genres|slice:"6:9"%}
-                      <td><a class="dropdown-item" href="{{ request.path }}?query={{genre.name}}">{{genre}}</a></td> 
+                      <td><a class="dropdown-item" href="{% url 'anime:search_results' %}?genre={{ genre.name }}">{{genre.name}}</a></td> 
                       {% endfor %}
                     </tr>
                     <tr>
-                      <td><a class="dropdown-item" href="{{ request.path }}">All</a></td>
+                      
+                      <td><a class="dropdown-item" href="{% url 'anime:search_results' %}">All</a></td>
                     </tr>
                     
                   </tbody>
@@ -61,7 +62,7 @@
         </li>  
       </ul>
       
-      <form class="d-flex mx-auto" role="search" action="" method="GET" >
+      <form class="d-flex mx-auto" role="search" action="{% url 'anime:search_results' %}" method="GET" >
           <div class="input-group">
             <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query" placeholder="Search">
             <button class="btn btn-outline-danger"  type="submit">Search</button>
