@@ -1,52 +1,26 @@
 
-<hr style="color: rgba(255, 255, 255, 0.568); margin-top: 150px;">
-<div class="container">
+
     
-    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-6 py-6 my-5">
-      <div class="col mb-3">
-        <!-- <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none" previewlistener="true">
-          <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        </a> -->
-        <p style="color: rgba(255, 255, 255, 0.568);">© 2024</p>
-      </div>
-  
-      <div class="col mb-3">
-  
-      </div>
-  
-      <div class="col mb-3">
-        <h5>Navigation</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="{% url 'anime:home' %}" class="nav-link p-0 text-body-secondary">Home</a></li>
-          {% if request.user.is_authenticated %}
-            <li class="nav-item mb-2"><a href="{% url 'users:profile' request.user.id %}" class="nav-link p-0 text-body-secondary">Profile</a></li>
-          {% else %}
-            <li class="nav-item mb-2"><a href="{% url 'users:login' %}" class="nav-link p-0 text-body-secondary">Profile</a></li>
-          {% endif %}
+    
+  <footer class="py-3 my-4 mt-5">
+    <ul class="nav justify-content-center pb-3 mb-4 position-relative" style="border-bottom: 1px solid #2b2b2b;">
+      <li class="nav-item"><a href="{% url 'anime:home' %}" class="nav-link px-2 text-body-secondary">Home</a></li>
+      <li class="nav-item"><a href="{% url 'anime:all_anime' %}" class="nav-link px-2 text-body-secondary">All</a></li>
+      {% if request.user.is_authenticated %}
+          <li class="nav-item mb-3"><a href="{% url 'users:profile' request.user.id %}" class="nav-link px-2 text-body-secondary">Profile</a></li>
+          <li class="nav-item mb-3"><a href="{% url 'users:logout' %}" class="nav-link px-2 text-body-secondary">Log Out</a></li>    
+      {% else %}
+          <li class="nav-item mb-3"><a href="{% url 'users:login' %}" class="nav-link px-2 text-body-secondary">Profile</a></li>
+          <li class="nav-item mb-3"><a href="{% url 'users:register' %}" class="nav-link px-2 text-body-secondary">Create Account</a></li>
+          <li class="nav-item mb-3"><a href="{% url 'users:login' %}" class="nav-link px-2 text-body-secondary">Log In</a></li>
+      {% endif %}
 
-        </ul>
+      <!-- Additional styling for the position of the Instagram icon -->
+      <div class="position-absolute start-50 translate-middle-x" style="bottom: -20px;">
+        <a href="https://www.instagram.com/a.r.myartwork/" class="nav-link px-2 text-body-secondary"><img src="/media/icons/icons8-instagram-24 (1).png" style="background-color: #181717;"></a>
       </div>
-  
-      <div class="col mb-3">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="{% url 'anime:all_anime' %}" class="nav-link p-0 text-body-secondary">All</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Popular</a></li>
-        </ul>
-      </div>
-  
-      <div class="col mb-3">
-        <h5>Account</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="{% url 'users:register' %}" class="nav-link p-0 text-body-secondary">Create Account</a></li>
-          {% if request.user.is_authenticated %}
-            <li class="nav-item mb-2"><a href="{% url 'users:logout' %}" class="nav-link p-0 text-body-secondary">Log Out</a></li>
-          {% else %}
-            <li class="nav-item mb-2"><a href="{% url 'users:login' %}" class="nav-link p-0 text-body-secondary">Log In</a></li>
-          {% endif %}
+    </ul>
+    <p class="text-center" style="color: #585858;">Anime</p>
+  </footer>
 
-          
-        </ul>
-      </div>
-    </footer>
-  </div>
+

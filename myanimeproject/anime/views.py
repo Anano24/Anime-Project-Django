@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import AnimeAddForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.core.paginator import Paginator
 
 
 
@@ -34,6 +35,11 @@ def search_results(request):
     else:
         anime_list = Anime.objects.all()
 
+
+    paginator = Paginator(anime_list, 4)
+    page_number = request.GET.get('page')
+    anime_list = paginator.get_page(page_number)
+
     heading = "Search results"
     context = {'anime_list': anime_list, 'genres': genres, 'heading': heading}
 
@@ -45,7 +51,11 @@ def all_anime(request):
     anime_list = Anime.objects.all()
     genres = Genre.objects.all()
 
-    heading = "All Animes"
+    paginator = Paginator(anime_list, 6)
+    page_number = request.GET.get('page')
+    anime_list = paginator.get_page(page_number)
+
+    heading = "All Anime"
     context = {'anime_list': anime_list, 'heading': heading, 'genres': genres}
 
     return render(request, 'anime/all_anime.html', context)

@@ -127,3 +127,15 @@
     background-color:#192e38;
 }
 
+
+.page-link {
+    border-radius: 0 !important;
+}
+
+
+.pagination .active-link {
+    background-color: red !important;
+    color: #ffffff !important;
+    border: 1px solid red !important;
+}
+

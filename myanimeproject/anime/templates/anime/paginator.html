@@ -1,0 +1,47 @@
+
+<nav aria-label="..." style="display: flex; justify-content: center; margin-top: 60px;">
+    <ul class="pagination" style="border: 1px solid #9a0f0f">
+    {% if anime_list.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1"  style="color: #9a0f0f;">&laquo; First</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ anime_list.previous_page_number }} "  style="color: #9a0f0f;">Previous</a>
+      </li>
+    {% else %}
+      <li class="page-item">
+        <span class="page-link disabled">&laquo; First</span>
+      </li>
+      <li class="page-item disabled">
+        <span class="page-link">Previous</span>
+      </li>
+    {% endif %}
+
+    {% for num in anime_list.paginator.page_range %}
+      {% if anime_list.number == num %}
+        <li class="page-item active" aria-current="page">
+            <span class="page-link"  style="color: #9a0f0f;"> {{ num }} </span>
+        </li>
+      {% elif num > anime_list.number|add:-3 and num < anime_list.number|add:3 %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}"  style="color: #9a0f0f;">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if anime_list.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ anime_list.next_page_number }}"  style="color: #9a0f0f;">Next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ anime_list.paginator.num_pages }}"  style="color: #9a0f0f;">Last &raquo;</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Next</span>
+      </li>
+      <li class="page-item disabled">
+        <span class="page-link" >Last &raquo;</span>
+      </li>
+    {% endif %}
+ 
+    </ul>
+</nav>

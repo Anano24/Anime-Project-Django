@@ -58,7 +58,6 @@ class Season(models.Model):
 
 
 class Episode(models.Model):
-    
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='episodes')
     title = models.CharField(max_length=200)
     episode_number = models.PositiveIntegerField()

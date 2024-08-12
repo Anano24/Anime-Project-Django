@@ -4,7 +4,7 @@
 
 
 {% block content %}
-    <div class="container mt-5">
+    <div class="container mt-5" style="height: 100vh;">
         <form method="POST", action="">
             {% csrf_token %}
             <h3 style="margin-top: 120px; color: white;">Are you sure you want to delete "{{ obj }}"?</h3>
